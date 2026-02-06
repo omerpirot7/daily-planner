@@ -96,6 +96,6 @@ class DailyPlanner extends Component
 
     public function render()
     {
-        return view('livewire.daily-planner');
+        return view('livewire.daily-planner')->layout('layouts.app');
     }
 }
