@@ -1,14 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Livewire\DailyPlanner;
 use App\Livewire\Dashboard;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\Auth\ForgotPassword;
 use App\Livewire\Auth\ResetPassword;
-use App\Livewire\Auth\VerifyEmail;
 use App\Http\Controllers\Auth\GoogleAuthController;
 
 /*
@@ -41,14 +39,6 @@ Route::middleware('guest')->group(function () {
 */
 
 Route::middleware('auth')->group(function () {
-    // Email Verification
-    Route::get('/email/verify', VerifyEmail::class)->name('verification.notice');
-
-    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-        $request->fulfill();
-        return redirect()->route('dashboard')->with('success', 'Your email has been verified successfully!');
-    })->middleware('signed')->name('verification.verify');
-
     // Logout
     Route::post('/logout', function () {
         auth()->logout();
@@ -57,9 +47,7 @@ Route::middleware('auth')->group(function () {
         return redirect()->route('login');
     })->name('logout');
 
-    // Protected Routes (Require Email Verification)
-    Route::middleware('verified')->group(function () {
-        Route::get('/dashboard', Dashboard::class)->name('dashboard');
-        Route::get('/planner', DailyPlanner::class)->name('planner');
-    });
+    // Protected Routes
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/planner', DailyPlanner::class)->name('planner');
 });

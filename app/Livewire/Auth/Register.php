@@ -7,8 +7,6 @@ use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Events\Registered;
 
 #[Layout('components.layouts.app')]
 #[Title('Sign Up - ZenPlan')]
@@ -52,16 +50,15 @@ class Register extends Component
         $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
-            'password' => Hash::make($this->password),
+            'password' => $this->password,
+            'email_verified_at' => now(),
         ]);
-
-        event(new Registered($user));
 
         Auth::login($user);
 
         session()->flash('success', 'Welcome to ZenPlan! Your account has been created successfully.');
 
-        return redirect()->route('verification.notice');
+        return redirect()->route('dashboard');
     }
 
     public function render()

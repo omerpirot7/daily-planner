@@ -17,6 +17,10 @@ class GoogleAuthController extends Controller
      */
     public function redirect()
     {
+        if (empty(config('services.google.client_id'))) {
+            return redirect()->route('login')->with('error', 'Google OAuth is not configured. Please sign up with email instead.');
+        }
+
         return Socialite::driver('google')->redirect();
     }
 
