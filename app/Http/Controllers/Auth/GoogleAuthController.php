@@ -58,7 +58,7 @@ class GoogleAuthController extends Controller
             // Log the user in
             Auth::login($user, true);
 
-            session()->flash('success', 'Welcome to ZenPlan!');
+            session()->flash('success', 'Welcome to Daily Planner!');
 
             return redirect()->intended('/dashboard');
 

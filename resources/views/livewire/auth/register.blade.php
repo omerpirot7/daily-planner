@@ -5,10 +5,11 @@
             Create your account
         </h2>
         <p class="text-slate-600">
-            Start organizing your daily tasks with ZenPlan
+            Start organizing your daily tasks with Daily Planner
         </p>
     </div>
 
+    @if(config('services.google.client_id'))
     <!-- Google Sign Up -->
     <x-auth.social-button
         provider="google"
@@ -17,6 +18,7 @@
 
     <!-- Divider -->
     <x-auth.divider text="or sign up with email" />
+    @endif
 
     <!-- Register Form -->
     <form wire:submit.prevent="register">

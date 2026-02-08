@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 #[Layout('components.layouts.app')]
-#[Title('Reset Password - ZenPlan')]
+#[Title('Reset Password - Daily Planner')]
 class ResetPassword extends Component
 {
     public $token;

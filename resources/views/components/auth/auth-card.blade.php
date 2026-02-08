@@ -2,7 +2,7 @@
     <div class="w-full max-w-md">
         <!-- Logo -->
         <div class="text-center mb-8">
-            <h1 class="text-4xl font-extrabold text-indigo-600 mb-2">ZenPlan</h1>
+            <h1 class="text-4xl font-extrabold text-indigo-600 mb-2">Daily Planner</h1>
             <div class="w-16 h-1 bg-indigo-600 mx-auto rounded-full"></div>
         </div>
 

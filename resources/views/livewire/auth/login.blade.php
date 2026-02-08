@@ -5,10 +5,11 @@
             Welcome back!
         </h2>
         <p class="text-slate-600">
-            Sign in to continue your productive journey with ZenPlan
+            Sign in to continue your productive journey with Daily Planner
         </p>
     </div>
 
+    @if(config('services.google.client_id'))
     <!-- Google Sign In -->
     <x-auth.social-button
         provider="google"
@@ -17,6 +18,7 @@
 
     <!-- Divider -->
     <x-auth.divider text="or continue with email" />
+    @endif
 
     <!-- Login Form -->
     <form wire:submit.prevent="login">

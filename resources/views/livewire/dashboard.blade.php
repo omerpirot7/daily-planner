@@ -5,7 +5,7 @@
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <h1 class="text-2xl font-extrabold text-indigo-600">ZenPlan</h1>
+                    <h1 class="text-2xl font-extrabold text-indigo-600">Daily Planner</h1>
                 </div>
 
                 <!-- User Menu -->

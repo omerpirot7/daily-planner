@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 
 #[Layout('components.layouts.app')]
-#[Title('Forgot Password - ZenPlan')]
+#[Title('Forgot Password - Daily Planner')]
 class ForgotPassword extends Component
 {
     public $email = '';

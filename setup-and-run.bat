@@ -1,6 +1,6 @@
 @echo off
 echo ========================================
-echo ZenPlan Authentication Setup
+echo Daily Planner Authentication Setup
 echo ========================================
 echo.
 

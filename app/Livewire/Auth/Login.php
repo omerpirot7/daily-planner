@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\ValidationException;
 
 #[Layout('components.layouts.app')]
-#[Title('Sign In - ZenPlan')]
+#[Title('Sign In - Daily Planner')]
 class Login extends Component
 {
     public $email = '';
@@ -46,7 +46,7 @@ class Login extends Component
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
             RateLimiter::clear($key);
             session()->regenerate();
-            session()->flash('success', 'Welcome back to ZenPlan!');
+            session()->flash('success', 'Welcome back to Daily Planner!');
 
             return redirect()->intended('/dashboard');
         }

@@ -42,7 +42,7 @@
                 </li>
                 <li class="flex items-start gap-2">
                     <span class="text-blue-600 font-bold">3.</span>
-                    Start organizing your tasks with ZenPlan!
+                    Start organizing your tasks with Daily Planner!
                 </li>
             </ul>
         </div>

@@ -8,7 +8,7 @@ use Livewire\Attributes\Title;
 use Illuminate\Support\Facades\Auth;
 
 #[Layout('components.layouts.app')]
-#[Title('Verify Email - ZenPlan')]
+#[Title('Verify Email - Daily Planner')]
 class VerifyEmail extends Component
 {
     public $emailSent = false;

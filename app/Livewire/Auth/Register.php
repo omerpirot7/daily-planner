@@ -9,7 +9,7 @@ use Livewire\Attributes\Title;
 use Illuminate\Support\Facades\Auth;
 
 #[Layout('components.layouts.app')]
-#[Title('Sign Up - ZenPlan')]
+#[Title('Sign Up - Daily Planner')]
 class Register extends Component
 {
     public $name = '';
@@ -56,7 +56,7 @@ class Register extends Component
 
         Auth::login($user);
 
-        session()->flash('success', 'Welcome to ZenPlan! Your account has been created successfully.');
+        session()->flash('success', 'Welcome to Daily Planner! Your account has been created successfully.');
 
         return redirect()->route('dashboard');
     }

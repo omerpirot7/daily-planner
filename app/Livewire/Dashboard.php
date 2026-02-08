@@ -8,7 +8,7 @@ use Livewire\Attributes\Title;
 use Illuminate\Support\Facades\Auth;
 
 #[Layout('components.layouts.app')]
-#[Title('Dashboard - ZenPlan')]
+#[Title('Dashboard - Daily Planner')]
 class Dashboard extends Component
 {
     public function logout()
