@@ -35,6 +35,9 @@ WORKDIR /var/www/html
 # Copy application files
 COPY . .
 
+# Copy production env file as .env
+COPY .env.production .env
+
 # Install PHP dependencies
 RUN composer install --optimize-autoloader --no-dev
 

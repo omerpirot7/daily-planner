@@ -2,6 +2,7 @@ node_modules
 vendor
 .env
 .env.backup
+.env.local
 .git
 .gitignore
 storage/logs/*

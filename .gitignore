@@ -11,7 +11,6 @@
 /storage/logs/*
 .env
 .env.backup
-.env.production
 .phpunit.cache
 .DS_Store
 Thumbs.db
