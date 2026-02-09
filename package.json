@@ -4,7 +4,7 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "concurrently --names=laravel,vite --prefix-colors=red,blue \"php -S dailyplanner:8000 -t public public/index.php\" \"vite\""
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",

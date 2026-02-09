@@ -1,0 +1,15 @@
+node_modules
+vendor
+.env
+.env.backup
+.git
+.gitignore
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+tests
+temp_fix
+test_serve.php
+test_serve2.php
+*.md
