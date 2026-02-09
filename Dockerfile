@@ -41,13 +41,24 @@ RUN composer install --optimize-autoloader --no-dev
 # Install Node.js dependencies and build assets
 RUN npm ci && npm run build
 
+# Create all required storage directories
+RUN mkdir -p storage/logs \
+    storage/framework/cache/data \
+    storage/framework/sessions \
+    storage/framework/testing \
+    storage/framework/views \
+    bootstrap/cache
+
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Use PORT env variable from Railway
+# Use PORT env variable from Railway/Koyeb
 RUN sed -i 's/Listen 80/Listen ${PORT}/g' /etc/apache2/ports.conf
 RUN sed -i 's/:80/:${PORT}/g' /etc/apache2/sites-available/000-default.conf
+
+# Add ServerName to suppress Apache warning
+RUN echo 'ServerName localhost' >> /etc/apache2/apache2.conf
 
 # Start script
 COPY docker-entrypoint.sh /usr/local/bin/
