@@ -35,9 +35,6 @@ WORKDIR /var/www/html
 # Copy application files
 COPY . .
 
-# Copy production env file as .env
-COPY .env.production .env
-
 # Install PHP dependencies
 RUN composer install --optimize-autoloader --no-dev
 
@@ -56,10 +53,6 @@ RUN mkdir -p storage/logs \
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Use PORT env variable from Railway/Koyeb
-RUN sed -i 's/Listen 80/Listen ${PORT}/g' /etc/apache2/ports.conf
-RUN sed -i 's/:80/:${PORT}/g' /etc/apache2/sites-available/000-default.conf
-
 # Add ServerName to suppress Apache warning
 RUN echo 'ServerName localhost' >> /etc/apache2/apache2.conf
 
@@ -67,6 +60,6 @@ RUN echo 'ServerName localhost' >> /etc/apache2/apache2.conf
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-EXPOSE ${PORT}
+EXPOSE 8000
 
 ENTRYPOINT ["docker-entrypoint.sh"]

@@ -11,6 +11,9 @@
 /storage/logs/*
 .env
 .env.backup
+.env.production
+.env.*.local
+koyeb-env.txt
 .phpunit.cache
 .DS_Store
 Thumbs.db

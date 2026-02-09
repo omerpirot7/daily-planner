@@ -3,6 +3,7 @@ vendor
 .env
 .env.backup
 .env.local
+.env.production
 .git
 .gitignore
 storage/logs/*
