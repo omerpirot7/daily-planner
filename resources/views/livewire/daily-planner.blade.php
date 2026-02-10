@@ -108,4 +108,9 @@
         @endif
     </div>
 
+    <!-- Pagination -->
+    <div class="mt-4">
+        {{ $this->tasks->links() }}
+    </div>
+
 </div>

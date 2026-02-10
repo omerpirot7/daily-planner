@@ -6,11 +6,13 @@ use Livewire\Component;
 use App\Models\Task;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Rule;
+use Livewire\WithPagination;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class DailyPlanner extends Component
 {
+    use WithPagination;
     #[Rule('required|min:3|max:255')]
     public $title = '';
 
@@ -27,12 +29,8 @@ class DailyPlanner extends Component
     {
         $this->validate();
 
-        // In a real app, use Auth::id(). For demo purposes if no user logged in, we might need a fallback or ensure auth middleware.
-        // Assuming strictly guarded route or creating a dummy user for demo if needed.
-        $userId = Auth::id() ?? 1; // Fallback for pure demo/seed environments
-
         Task::create([
-            'user_id' => $userId,
+            'user_id' => Auth::id(),
             'title' => $this->title,
             'description' => $this->description,
             'priority' => $this->priority,
@@ -49,9 +47,11 @@ class DailyPlanner extends Component
 
     public function toggle($taskId)
     {
-        $task = Task::find($taskId);
-        
-        if ($task) { // Add authorization check here in prod: && $task->user_id === Auth::id()
+        $task = Task::where('id', $taskId)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if ($task) {
             $task->status = $task->status === 'completed' ? 'pending' : 'completed';
             $task->save();
         }
@@ -59,38 +59,35 @@ class DailyPlanner extends Component
 
     public function delete($taskId)
     {
-        $task = Task::find($taskId);
-        
-        if ($task) {
-           $task->delete();
-        }
+        Task::where('id', $taskId)
+            ->where('user_id', Auth::id())
+            ->delete();
     }
 
     #[Computed]
     public function tasks()
     {
-         // Fetch tasks, with completed ones at the bottom, then by priority/date
-         return Task::query() // Add ->where('user_id', Auth::id())
-            ->orderByRaw("status = 'completed'") // false (0) comes before true (1), so pending first
+        return Task::where('user_id', Auth::id())
+            ->orderByRaw("status = 'completed'")
+            ->orderByRaw("CASE priority WHEN 'high' THEN 1 WHEN 'medium' THEN 2 WHEN 'low' THEN 3 END")
             ->orderByDesc('created_at')
-            ->get();
+            ->paginate(20);
     }
 
     #[Computed]
     public function completionStats()
     {
-        $tasks = $this->tasks;
-        $total = $tasks->count();
-        
+        $total = Task::where('user_id', Auth::id())->count();
+
         if ($total === 0) return ['completed' => 0, 'total' => 0, 'percentage' => 0];
 
-        $completed = $tasks->where('status', 'completed')->count();
+        $completed = Task::where('user_id', Auth::id())->where('status', 'completed')->count();
         $percentage = round(($completed / $total) * 100);
 
         return [
             'completed' => $completed,
             'total' => $total,
-            'percentage' => $percentage
+            'percentage' => $percentage,
         ];
     }
 

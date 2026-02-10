@@ -65,7 +65,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-slate-600 mb-1">Tasks Today</p>
-                        <p class="text-3xl font-bold text-slate-800">0</p>
+                        <p class="text-3xl font-bold text-slate-800">{{ $this->todayTasksCount }}</p>
                     </div>
                     <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
                         <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -80,7 +80,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-slate-600 mb-1">Completed</p>
-                        <p class="text-3xl font-bold text-slate-800">0</p>
+                        <p class="text-3xl font-bold text-slate-800">{{ $this->completedCount }}</p>
                     </div>
                     <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
                         <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -95,7 +95,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-slate-600 mb-1">Productivity</p>
-                        <p class="text-3xl font-bold text-slate-800">0%</p>
+                        <p class="text-3xl font-bold text-slate-800">{{ $this->productivity }}%</p>
                     </div>
                     <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
                         <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
