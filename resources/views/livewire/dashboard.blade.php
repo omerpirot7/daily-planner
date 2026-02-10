@@ -4,7 +4,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
-                <div class="flex items-center">
+                <div class="flex items-center gap-2">
+                    <img src="/images/logo.png" alt="Daily Planner" class="w-8 h-8">
                     <h1 class="text-2xl font-extrabold text-indigo-600">Daily Planner</h1>
                 </div>
 
@@ -110,9 +111,9 @@
         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
             <div class="flex items-center justify-between mb-6">
                 <h3 class="text-xl font-bold text-slate-800">Your Daily Planner</h3>
-                <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors">
+                <a href="{{ route('planner') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors">
                     Add Task
-                </button>
+                </a>
             </div>
 
             <!-- Empty State -->
@@ -124,9 +125,9 @@
                 </div>
                 <h4 class="text-lg font-semibold text-slate-700 mb-2">No tasks yet</h4>
                 <p class="text-slate-500 mb-6">Start planning your day by adding your first task</p>
-                <button class="px-6 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors">
+                <a href="{{ route('planner') }}" class="px-6 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors inline-block">
                     Create Your First Task
-                </button>
+                </a>
             </div>
         </div>
     </div>

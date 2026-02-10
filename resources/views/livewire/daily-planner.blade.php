@@ -2,11 +2,14 @@
     
     <!-- Header Section -->
     <div class="flex justify-between items-end">
-        <div>
-            <h1 class="text-4xl font-extrabold tracking-tight text-gray-900">
-                Good Morning &nbsp; <span class="text-indigo-500">✨</span>
-            </h1>
-            <p class="mt-2 text-lg text-gray-500 font-medium">{{ \Carbon\Carbon::now()->toFormattedDateString() }}</p>
+        <div class="flex items-center gap-4">
+            <img src="/images/logo.png" alt="Daily Planner" class="w-16 h-16 drop-shadow-md">
+            <div>
+                <h1 class="text-4xl font-extrabold tracking-tight text-gray-900">
+                    Good Morning &nbsp; <span class="text-indigo-500">&#10024;</span>
+                </h1>
+                <p class="mt-1 text-lg text-gray-500 font-medium">{{ \Carbon\Carbon::now()->toFormattedDateString() }}</p>
+            </div>
         </div>
         
         <!-- Stats Widget -->
@@ -54,25 +57,60 @@
     @error('title') <span class="text-red-500 text-sm pl-4">{{ $message }}</span> @enderror
 
     <!-- Task List -->
-    <div class="space-y-4">
+    <div class="space-y-3">
+        @php $currentDate = null; @endphp
         @foreach($this->tasks as $task)
+            @php
+                $taskDate = $task->created_at->format('Y-m-d');
+                $isNewDate = $currentDate !== $taskDate;
+                $currentDate = $taskDate;
+            @endphp
+
+            @if($isNewDate)
+                <!-- Date Header -->
+                <div class="flex items-center gap-4 pt-6 pb-2 {{ !$loop->first ? 'mt-4 border-t border-gray-100' : '' }}">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center
+                            {{ $task->created_at->isToday() ? 'bg-indigo-100 text-indigo-600' : ($task->created_at->isYesterday() ? 'bg-amber-100 text-amber-600' : 'bg-gray-100 text-gray-500') }}">
+                            <span class="text-sm font-bold">{{ $task->created_at->format('d') }}</span>
+                        </div>
+                        <div>
+                            <h2 class="text-sm font-bold uppercase tracking-wider
+                                {{ $task->created_at->isToday() ? 'text-indigo-600' : ($task->created_at->isYesterday() ? 'text-amber-600' : 'text-gray-400') }}">
+                                @if($task->created_at->isToday())
+                                    Today
+                                @elseif($task->created_at->isYesterday())
+                                    Yesterday
+                                @else
+                                    {{ $task->created_at->format('l') }}
+                                @endif
+                            </h2>
+                            <p class="text-xs text-gray-400">{{ $task->created_at->format('M d, Y') }}</p>
+                        </div>
+                    </div>
+                    <div class="flex-1 h-px bg-gradient-to-r from-gray-200 to-transparent"></div>
+                </div>
+            @endif
+
             <div 
                 wire:key="task-{{ $task->id }}"
-                class="group flex items-center justify-between p-5 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 {{ $task->status === 'completed' ? 'opacity-60 bg-gray-50' : '' }}"
+                x-data="{ done: {{ $task->status === 'completed' ? 'true' : 'false' }} }"
+                class="group flex items-center justify-between p-5 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
+                :class="done ? 'opacity-60 bg-gray-50' : ''"
             >
                 <div class="flex items-center gap-5">
-                    <!-- Custom Checkbox -->
+                    <!-- Custom Checkbox (optimistic toggle) -->
                     <button 
-                        wire:click="toggle({{ $task->id }})"
-                        class="relative w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-300 {{ $task->status === 'completed' ? 'bg-indigo-500 border-indigo-500' : 'border-gray-200 hover:border-indigo-400' }}"
+                        @click="done = !done; $wire.toggle({{ $task->id }})"
+                        class="relative w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-300"
+                        :class="done ? 'bg-indigo-500 border-indigo-500' : 'border-gray-200 hover:border-indigo-400'"
                     >
-                        @if($task->status === 'completed')
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        @endif
+                        <svg x-show="done" x-transition.scale.origin.center xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     </button>
 
                     <div>
-                        <h3 class="text-lg font-semibold {{ $task->status === 'completed' ? 'line-through text-gray-400' : 'text-gray-800' }} transition-all">
+                        <h3 class="text-lg font-semibold transition-all"
+                            :class="done ? 'line-through text-gray-400' : 'text-gray-800'">
                             {{ $task->title }}
                         </h3>
                         

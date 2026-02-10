@@ -68,10 +68,8 @@ class DailyPlanner extends Component
     public function tasks()
     {
         return Task::where('user_id', Auth::id())
-            ->orderByRaw("status = 'completed'")
-            ->orderByRaw("CASE priority WHEN 'high' THEN 1 WHEN 'medium' THEN 2 WHEN 'low' THEN 3 END")
             ->orderByDesc('created_at')
-            ->paginate(20);
+            ->paginate(50);
     }
 
     #[Computed]
