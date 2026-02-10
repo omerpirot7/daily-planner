@@ -6,10 +6,12 @@ use Livewire\Component;
 use App\Models\Task;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Rule;
+use Livewire\Attributes\Layout;
 use Livewire\WithPagination;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
+#[Layout('layouts.app')]
 class DailyPlanner extends Component
 {
     use WithPagination;
@@ -91,6 +93,6 @@ class DailyPlanner extends Component
 
     public function render()
     {
-        return view('livewire.daily-planner')->layout('layouts.app');
+        return view('livewire.daily-planner');
     }
 }
